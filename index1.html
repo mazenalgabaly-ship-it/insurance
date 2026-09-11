@@ -24,7 +24,7 @@
       <div class="bg-blue-600 p-2 rounded-lg text-white"><i class="fa-solid fa-prescription-bottle-medical text-xl"></i></div>
       <div>
         <h1 class="font-bold text-base leading-tight">صيدلية الجبلي</h1>
-        <p class="text-xs text-slate-400">نظام التأمين الطبي v2</p>
+        <p class="text-xs text-slate-400">نظام التأمين الطبي v2 (مستقل)</p>
       </div>
     </div>
 
@@ -59,7 +59,7 @@
       <div class="flex justify-between items-center">
         <div>
           <h2 class="text-2xl font-bold text-slate-800">لوحة التحكم والاستعلامات</h2>
-          <p class="text-sm text-slate-500">ملخص الأداء والمطالبات الشهرية</p>
+          <p class="text-sm text-slate-500">ملخص الأداء والمطالبات الشهرية (النسخة الثانية)</p>
         </div>
         <button onclick="switchTab('newInvoice')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl text-sm flex items-center gap-2">
           <i class="fa-solid fa-plus"></i> فاتورة جديدة
@@ -343,9 +343,9 @@
   </section>
 
   <script>
-    // قاعدة البيانات المحلية LocalStorage
-    let invoices = JSON.parse(localStorage.getItem('pharmacy_invoices')) || [];
-    let settings = JSON.parse(localStorage.getItem('pharmacy_settings')) || {
+    // تم تغيير مفاتيح LocalStorage لتكون v2 لضمان استقلالية الموقع تماماً
+    let invoices = JSON.parse(localStorage.getItem('pharmacy_invoices_v2')) || [];
+    let settings = JSON.parse(localStorage.getItem('pharmacy_settings_v2')) || {
       pharmacyName: 'صيدلية الجبلي',
       address: 'شارع صلاح سالم - الباجور - المنوفية',
       commReg: '60961',
@@ -511,7 +511,7 @@
       });
     }
 
-    // حفظ الفاتورة (إضافة أو تعديل)
+    // حفظ الفاتورة (إضافة أو تعديل في v2)
     function saveRecord() {
       const editingId = document.getElementById('editingId').value;
       const medicines = [];
@@ -549,8 +549,8 @@
         invoices.push(invoiceData);
       }
 
-      localStorage.setItem('pharmacy_invoices', JSON.stringify(invoices));
-      alert("تم حفظ الفاتورة بنجاح!");
+      localStorage.setItem('pharmacy_invoices_v2', JSON.stringify(invoices));
+      alert("تم حفظ الفاتورة بنجاح في قاعدة بيانات v2!");
       resetForm();
       switchTab('records');
     }
@@ -617,7 +617,7 @@
     function deleteInvoice(id) {
       if(confirm('هل أنت تأكد من حذف هذه الفاتورة نهائياً؟')) {
         invoices = invoices.filter(i => i.id !== id);
-        localStorage.setItem('pharmacy_invoices', JSON.stringify(invoices));
+        localStorage.setItem('pharmacy_invoices_v2', JSON.stringify(invoices));
         renderRecordsTable();
       }
     }
@@ -727,7 +727,7 @@
       window.print();
     }
 
-    // الإعدادات
+    // الإعدادات (v2)
     function saveSettings() {
       settings.pharmacyName = document.getElementById('settingPharmacyName').value;
       settings.address = document.getElementById('settingAddress').value;
@@ -735,9 +735,9 @@
       settings.taxReg = document.getElementById('settingTaxReg').value;
       settings.apiKey = document.getElementById('settingApiKey').value;
 
-      localStorage.setItem('pharmacy_settings', JSON.stringify(settings));
+      localStorage.setItem('pharmacy_settings_v2', JSON.stringify(settings));
       if (settings.apiKey) document.getElementById('apiKeyInput').value = settings.apiKey;
-      alert('تم حفظ الإعدادات بنجاح!');
+      alert('تم حفظ إعدادات v2 بنجاح!');
     }
 
     function loadSettings() {
